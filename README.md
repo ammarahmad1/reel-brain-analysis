@@ -13,8 +13,6 @@ second-by-second report on how an average brain is predicted to respond to it:
 Everything runs on Google Colab's free GPU. The report opens in your browser; your video never leaves your
 Colab session.
 
-> These are model predictions for an *average* brain, not measurements of you or your audience. A predicted
-> brain response isn't the same as attention or views, and nothing here promises engagement.
 
 ## Make a report
 
