@@ -1,0 +1,366 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://reel-brain-report/report.schema.json",
+  "title": "Report",
+  "description": "Contract between the worker (packages/report) and the frontend. Scores are within-reel z-scores.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "video",
+    "timeline",
+    "insights",
+    "fixes",
+    "heatmaps",
+    "disclaimer",
+    "credits"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0"
+    },
+    "video": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "duration_s"
+      ],
+      "properties": {
+        "duration_s": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "timeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seconds",
+        "overall",
+        "channels"
+      ],
+      "properties": {
+        "seconds": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "minItems": 1
+        },
+        "overall": {
+          "$ref": "#/$defs/series"
+        },
+        "channels": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "visual",
+            "faces",
+            "sound",
+            "speech"
+          ],
+          "properties": {
+            "visual": {
+              "$ref": "#/$defs/series"
+            },
+            "faces": {
+              "$ref": "#/$defs/series"
+            },
+            "sound": {
+              "$ref": "#/$defs/series"
+            },
+            "speech": {
+              "$ref": "#/$defs/series"
+            }
+          }
+        }
+      },
+      "title": "Timeline"
+    },
+    "insights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "hook",
+        "ending",
+        "peak",
+        "low",
+        "dips",
+        "carrier",
+        "speech"
+      ],
+      "properties": {
+        "hook": {
+          "$ref": "#/$defs/window"
+        },
+        "ending": {
+          "$ref": "#/$defs/window"
+        },
+        "peak": {
+          "$ref": "#/$defs/moment"
+        },
+        "low": {
+          "$ref": "#/$defs/moment"
+        },
+        "dips": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "start_s",
+              "end_s",
+              "min_z",
+              "lowest_second",
+              "weakest_channel"
+            ],
+            "properties": {
+              "start_s": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "end_s": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "min_z": {
+                "type": "number"
+              },
+              "lowest_second": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "weakest_channel": {
+                "$ref": "#/$defs/channel"
+              }
+            },
+            "title": "Dip"
+          }
+        },
+        "carrier": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "channel",
+            "correlations"
+          ],
+          "properties": {
+            "channel": {
+              "anyOf": [
+                {
+                  "$ref": "#/$defs/channel"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "correlations": {
+              "type": "object",
+              "propertyNames": {
+                "$ref": "#/$defs/channel"
+              },
+              "additionalProperties": {
+                "type": "number",
+                "minimum": -1,
+                "maximum": 1
+              }
+            }
+          },
+          "title": "Carrier"
+        },
+        "speech": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "word_count",
+            "detected"
+          ],
+          "properties": {
+            "word_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "detected": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "title": "Insights"
+    },
+    "fixes": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "detail",
+          "start_s",
+          "end_s"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "start_s": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "end_s": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1
+          }
+        },
+        "title": "Fix"
+      }
+    },
+    "heatmaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "label",
+          "second",
+          "file"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "average",
+              "hook",
+              "peak",
+              "dip"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "second": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          },
+          "file": {
+            "type": "string",
+            "pattern": "^[a-z_]+\\.png$"
+          }
+        },
+        "title": "Heatmap"
+      }
+    },
+    "disclaimer": {
+      "type": "string",
+      "minLength": 1
+    },
+    "credits": {
+      "type": "object",
+      "required": [
+        "model",
+        "model_url",
+        "model_license"
+      ],
+      "properties": {
+        "model": {
+          "type": "string"
+        },
+        "model_url": {
+          "type": "string"
+        },
+        "model_license": {
+          "type": "string"
+        },
+        "text_model": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "channel": {
+      "enum": [
+        "visual",
+        "faces",
+        "sound",
+        "speech"
+      ]
+    },
+    "series": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 1
+    },
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "start_s",
+        "end_s",
+        "score_z",
+        "rating"
+      ],
+      "properties": {
+        "start_s": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_s": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "score_z": {
+          "type": "number"
+        },
+        "rating": {
+          "enum": [
+            "strong",
+            "average",
+            "weak"
+          ]
+        }
+      },
+      "title": "WindowScore"
+    },
+    "moment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "second",
+        "z"
+      ],
+      "properties": {
+        "second": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "z": {
+          "type": "number"
+        }
+      },
+      "title": "Moment"
+    }
+  }
+}

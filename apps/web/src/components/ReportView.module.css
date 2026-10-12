@@ -1,0 +1,132 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.disclaimer {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  font-size: 0.9375rem;
+}
+
+.disclaimer strong {
+  color: var(--text-primary);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px;
+}
+
+.tileTitle {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.tileValue {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.tileNote {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+.good {
+  color: var(--status-good-ink);
+}
+
+.serious {
+  color: var(--status-serious-ink);
+}
+
+.neutral {
+  color: var(--status-neutral-ink);
+}
+
+.fixes {
+  margin: 12px 0 0;
+  padding-left: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fix::marker {
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.fix p {
+  margin: 4px 0 0;
+}
+
+.fixHead {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.fixHead h3 {
+  font-size: 1.0625rem;
+  margin: 0;
+}
+
+.chip {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.dips {
+  margin: 8px 0 12px;
+  padding-left: 1.2rem;
+}
+
+.heatmaps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.heatmap {
+  margin: 0;
+  /* The images are rendered on white; keep them on a light card in both themes. */
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.heatmap img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.heatmap figcaption {
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  color: #52514e;
+  border-top: 1px solid rgba(11, 11, 11, 0.1);
+}

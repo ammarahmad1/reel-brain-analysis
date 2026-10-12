@@ -1,0 +1,362 @@
+/content/tribev2/tribev2/pl_module.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/pl_module.py:2:# All rights reserved.
+/content/tribev2/tribev2/eventstransforms.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/eventstransforms.py:2:# All rights reserved.
+/content/tribev2/tribev2/eventstransforms.py:194:                    "frequency",
+/content/tribev2/tribev2/eventstransforms.py:199:                    "offset",
+/content/tribev2/tribev2/eventstransforms.py:205:            transcript["start"] += audio_event.start + audio_event.offset
+/content/tribev2/tribev2/eventstransforms.py:247:                    "frequency": self.fps,
+/content/tribev2/tribev2/model.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/model.py:2:# All rights reserved.
+/content/tribev2/tribev2/plotting/base.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/plotting/base.py:2:# All rights reserved.
+/content/tribev2/tribev2/plotting/base.py:14:from neuralset.extractors.neuro import FSAVERAGE_SIZES
+/content/tribev2/tribev2/plotting/base.py:18:cached_fetch_surf_fsaverage = lru_cache(datasets.fetch_surf_fsaverage)
+/content/tribev2/tribev2/plotting/base.py:23:        tp.Literal["fsaverage3", "fsaverage4", "fsaverage5", "fsaverage6", "fsaverage7"]
+/content/tribev2/tribev2/plotting/base.py:25:    ) = "fsaverage5"
+/content/tribev2/tribev2/plotting/base.py:28:    hemisphere_gap: float = 0
+/content/tribev2/tribev2/plotting/base.py:101:        fsaverage = cached_fetch_surf_fsaverage(mesh=self.mesh)
+/content/tribev2/tribev2/plotting/base.py:102:        hemis = [
+/content/tribev2/tribev2/plotting/base.py:105:                surf_mesh=fsaverage[f"pial_{hemi}"],
+/content/tribev2/tribev2/plotting/base.py:109:            for hemi in ("left", "right")
+/content/tribev2/tribev2/plotting/base.py:111:        return np.concatenate(hemis)
+/content/tribev2/tribev2/plotting/base.py:128:        """Load mesh geometry and background maps for both hemispheres.
+/content/tribev2/tribev2/plotting/base.py:130:        Returns a dict with keys ``'left'``, ``'right'``, ``'both'``,
+/content/tribev2/tribev2/plotting/base.py:132:        The ``'both'`` entry has hemisphere_gap applied.
+/content/tribev2/tribev2/plotting/base.py:134:        fs_out = cached_fetch_surf_fsaverage(self.mesh)
+/content/tribev2/tribev2/plotting/base.py:137:        for hemi in ("left", "right"):
+/content/tribev2/tribev2/plotting/base.py:138:            infl_out_xyz, _ = nib.load(getattr(fs_out, f"infl_{hemi}")).darrays
+/content/tribev2/tribev2/plotting/base.py:139:            pial_xyz, faces = nib.load(getattr(fs_out, f"pial_{hemi}")).darrays
+/content/tribev2/tribev2/plotting/base.py:151:            bg_map = nib.load(getattr(fs_out, f"{bg_key}_{hemi}")).darrays[0].data
+/content/tribev2/tribev2/plotting/base.py:156:            if hemi == "left":
+/content/tribev2/tribev2/plotting/base.py:157:                coords[:, 0] = coords[:, 0] - coords[:, 0].max() - self.hemisphere_gap
+/content/tribev2/tribev2/plotting/base.py:159:                coords[:, 0] = coords[:, 0] - coords[:, 0].min() + self.hemisphere_gap
+/content/tribev2/tribev2/plotting/base.py:161:            out[hemi] = dict(coords=coords, faces=faces.data, bg_map=bg_map)
+/content/tribev2/tribev2/plotting/base.py:164:            coords=np.r_[out["left"]["coords"], out["right"]["coords"]],
+/content/tribev2/tribev2/plotting/base.py:166:                out["left"]["faces"],
+/content/tribev2/tribev2/plotting/base.py:167:                out["right"]["faces"] + out["left"]["faces"].max() + 1,
+/content/tribev2/tribev2/plotting/base.py:169:            bg_map=np.r_[out["left"]["bg_map"], out["right"]["bg_map"]],
+/content/tribev2/tribev2/plotting/base.py:179:        """Split vertex data into hemispheres, upsampling if needed.
+/content/tribev2/tribev2/plotting/base.py:181:        Returns ``{'left': array, 'right': array, 'both': array}``.
+/content/tribev2/tribev2/plotting/base.py:184:        for name, size in FSAVERAGE_SIZES.items():
+/content/tribev2/tribev2/plotting/base.py:191:        left = data[: len(data) // 2]
+/content/tribev2/tribev2/plotting/base.py:192:        right = data[len(data) // 2 :]
+/content/tribev2/tribev2/plotting/base.py:195:            fs_in = cached_fetch_surf_fsaverage(in_mesh)
+/content/tribev2/tribev2/plotting/base.py:196:            fs_out = cached_fetch_surf_fsaverage(self.mesh)
+/content/tribev2/tribev2/plotting/base.py:198:            for hemi, values in (("left", left), ("right", right)):
+/content/tribev2/tribev2/plotting/base.py:199:                infl_in_xyz, _ = nib.load(getattr(fs_in, f"infl_{hemi}")).darrays
+/content/tribev2/tribev2/plotting/base.py:200:                infl_out_xyz, _ = nib.load(getattr(fs_out, f"infl_{hemi}")).darrays
+/content/tribev2/tribev2/plotting/base.py:205:                    resampled[hemi] = np.apply_along_axis(
+/content/tribev2/tribev2/plotting/base.py:212:                    resampled[hemi] = np.sum(values[indices] * weights, axis=1)
+/content/tribev2/tribev2/plotting/base.py:213:            left, right = resampled["left"], resampled["right"]
+/content/tribev2/tribev2/plotting/base.py:215:        return dict(left=left, right=right, both=np.r_[left, right])
+/content/tribev2/tribev2/plotting/base.py:217:    def get_hemis(self, data: np.ndarray) -> dict:
+/content/tribev2/tribev2/plotting/base.py:221:        for hemi in ("left", "right", "both"):
+/content/tribev2/tribev2/plotting/base.py:222:            m = self._mesh[hemi]
+/content/tribev2/tribev2/plotting/base.py:223:            out[hemi] = dict(
+/content/tribev2/tribev2/plotting/base.py:224:                stat_map=stat_maps[hemi],
+/content/tribev2/tribev2/plotting/base.py:227:                hemi=hemi,
+/content/tribev2/tribev2/plotting/base.py:244:        views: str | dict[str, str] = "left",
+/content/tribev2/tribev2/plotting/base.py:345:        left, full_width = (
+/content/tribev2/tribev2/plotting/base.py:357:                left,
+/content/tribev2/tribev2/plotting/base.py:380:            segments[0], stop_offset=(len(segments) - 1) * segments[0].duration
+/content/tribev2/tribev2/plotting/base.py:464:                out_fig.text(0.1, 0.92, words, fontsize=9, ha="left", va="top")
+/content/tribev2/tribev2/plotting/__init__.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/plotting/__init__.py:2:# All rights reserved.
+/content/tribev2/tribev2/plotting/cortical.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/plotting/cortical.py:2:# All rights reserved.
+/content/tribev2/tribev2/plotting/cortical.py:13:from neuralset.extractors.neuro import FSAVERAGE_SIZES
+/content/tribev2/tribev2/plotting/cortical.py:14:from nilearn.datasets import load_fsaverage
+/content/tribev2/tribev2/plotting/cortical.py:23:    "left": (0, 180),
+/content/tribev2/tribev2/plotting/cortical.py:24:    "right": (0, 0),
+/content/tribev2/tribev2/plotting/cortical.py:25:    "medial_left": (0, 0),
+/content/tribev2/tribev2/plotting/cortical.py:26:    "medial_right": (0, 180),
+/content/tribev2/tribev2/plotting/cortical.py:31:    "posterior_left": (0, -135),
+/content/tribev2/tribev2/plotting/cortical.py:32:    "posterior_right": (0, -45),
+/content/tribev2/tribev2/plotting/cortical.py:34:    "posterior_ventral_left": (-10, -135),
+/content/tribev2/tribev2/plotting/cortical.py:67:        views: str | list[str] | list[tuple[int, int]] = "left",
+/content/tribev2/tribev2/plotting/cortical.py:89:            signals.shape[0] // 2 in FSAVERAGE_SIZES.values()
+/content/tribev2/tribev2/plotting/cortical.py:93:        hemis = self.get_hemis(signals)
+/content/tribev2/tribev2/plotting/cortical.py:96:            for k in hemis:
+/content/tribev2/tribev2/plotting/cortical.py:97:                hemis[k]["roi_map"] = hemis[k].pop("stat_map")
+/content/tribev2/tribev2/plotting/cortical.py:111:            selected_hemi = (
+/content/tribev2/tribev2/plotting/cortical.py:112:                "left"
+/content/tribev2/tribev2/plotting/cortical.py:113:                if view in ["left", "medial_left"]
+/content/tribev2/tribev2/plotting/cortical.py:114:                else "right" if view in ["right", "medial_right"] else "both"
+/content/tribev2/tribev2/plotting/cortical.py:135:            plot_fn(**hemis[selected_hemi], **plot_kwargs)
+/content/tribev2/tribev2/plotting/cortical.py:137:                self.annotate_rois(ax, annotated_rois, hemi=selected_hemi)
+/content/tribev2/tribev2/plotting/cortical.py:171:        views: list[str] | list[tuple[int, int]] = ["left"],
+/content/tribev2/tribev2/plotting/cortical.py:182:        fsaverage_meshes = load_fsaverage(mesh=self.mesh)
+/content/tribev2/tribev2/plotting/cortical.py:189:                signal.shape[0] // 2 in FSAVERAGE_SIZES.values()
+/content/tribev2/tribev2/plotting/cortical.py:191:        hemis = [self.get_hemis(signal) for signal in signals]
+/content/tribev2/tribev2/plotting/cortical.py:193:            alpha_hemis = self.get_hemis(alpha_signals)
+/content/tribev2/tribev2/plotting/cortical.py:195:        for selected_hemis in ("left", "right", "both"):
+/content/tribev2/tribev2/plotting/cortical.py:196:            vertices, faces = hemis[0][selected_hemis]["surf_mesh"]
+/content/tribev2/tribev2/plotting/cortical.py:198:                [hemi[selected_hemis]["stat_map"] for hemi in hemis], axis=1
+/content/tribev2/tribev2/plotting/cortical.py:223:                alpha = alpha_hemis[selected_hemis]["stat_map"]
+/content/tribev2/tribev2/plotting/cortical.py:226:            bg = hemis[0][selected_hemis]["bg_map"]
+/content/tribev2/tribev2/plotting/cortical.py:235:            data[selected_hemis] = dict(
+/content/tribev2/tribev2/plotting/cortical.py:243:            selected_hemis = (
+/content/tribev2/tribev2/plotting/cortical.py:244:                "left" if "left" in view else "right" if "right" in view else "both"
+/content/tribev2/tribev2/plotting/cortical.py:246:            colors = data[selected_hemis]["face_colors"]
+/content/tribev2/tribev2/plotting/cortical.py:247:            vertices = data[selected_hemis]["vertices"]
+/content/tribev2/tribev2/plotting/cortical.py:248:            faces = data[selected_hemis]["faces"]
+/content/tribev2/tribev2/plotting/cortical.py:295:        hemi: str = "left",
+/content/tribev2/tribev2/plotting/cortical.py:300:        assert hemi in ["left", "right"]
+/content/tribev2/tribev2/plotting/cortical.py:301:        data = np.zeros(2 * FSAVERAGE_SIZES[self.mesh])
+/content/tribev2/tribev2/plotting/cortical.py:302:        vertices = self.get_hemis(data)["both"]["surf_mesh"][0]
+/content/tribev2/tribev2/plotting/cortical.py:303:        if hemi == "left":
+/content/tribev2/tribev2/plotting/cortical.py:304:            vertices = vertices[: FSAVERAGE_SIZES[self.mesh]]
+/content/tribev2/tribev2/plotting/cortical.py:306:            vertices = vertices[FSAVERAGE_SIZES[self.mesh] :]
+/content/tribev2/tribev2/plotting/cortical.py:308:            vertex_indices = get_hcp_roi_indices(roi, mesh=self.mesh, hemi=hemi)
+/content/tribev2/tribev2/plotting/subcortical.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/plotting/subcortical.py:2:# All rights reserved.
+/content/tribev2/tribev2/plotting/subcortical.py:45:def get_subcortical_labels(with_hemi: bool = False):
+/content/tribev2/tribev2/plotting/subcortical.py:52:    if not with_hemi:
+/content/tribev2/tribev2/plotting/subcortical.py:56:                    label.replace("Left ", "")
+/content/tribev2/tribev2/plotting/subcortical.py:58:                    if label.startswith("Left ")
+/content/tribev2/tribev2/plotting/subcortical.py:120:        # subcortical, return hemisphere-specific mesh (default: right)
+/content/tribev2/tribev2/plotting/subcortical.py:124:        if "Left" in label or "Right" in label:
+/content/tribev2/tribev2/plotting/subcortical.py:128:            # merge left + right
+/content/tribev2/tribev2/plotting/subcortical.py:129:            left_idx = ho_sub.labels.index("Left " + label)
+/content/tribev2/tribev2/plotting/subcortical.py:130:            right_idx = ho_sub.labels.index("Right " + label)
+/content/tribev2/tribev2/plotting/subcortical.py:132:            mask = (data == left_idx) | (data == right_idx)
+/content/tribev2/tribev2/plotting/subcortical.py:143:    For 'Cerebellum', 'Cerebral Cortex', and 'Brain-Stem', left and right hemispheres are joined.
+/content/tribev2/tribev2/plotting/subcortical.py:144:    For other subcortical labels, returns separate left/right meshes.
+/content/tribev2/tribev2/plotting/subcortical.py:148:        fsaverage = datasets.fetch_surf_fsaverage("fsaverage7")
+/content/tribev2/tribev2/plotting/subcortical.py:149:        nii = nib.load(fsaverage.pial_left)
+/content/tribev2/tribev2/plotting/subcortical.py:207:    labels = get_subcortical_labels(with_hemi=True)
+/content/tribev2/tribev2/plotting/subcortical.py:295:    labels = get_subcortical_labels(with_hemi=False)
+/content/tribev2/tribev2/plotting/subcortical.py:298:        f"{hemi} {label}": palette[i]
+/content/tribev2/tribev2/plotting/subcortical.py:300:        for hemi in ["Left", "Right"]
+/content/tribev2/tribev2/plotting/cortical_pv.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/plotting/cortical_pv.py:2:# All rights reserved.
+/content/tribev2/tribev2/plotting/cortical_pv.py:13:from neuralset.extractors.neuro import FSAVERAGE_SIZES
+/content/tribev2/tribev2/plotting/cortical_pv.py:30:    "left": ([-1, 0, 0], [0, 0, 1]),
+/content/tribev2/tribev2/plotting/cortical_pv.py:31:    "right": ([1, 0, 0], [0, 0, 1]),
+/content/tribev2/tribev2/plotting/cortical_pv.py:34:    "medial_left": ([1, 0, 0], [0, 0, 1]),
+/content/tribev2/tribev2/plotting/cortical_pv.py:35:    "medial_right": ([-1, 0, 0], [0, 0, 1]),
+/content/tribev2/tribev2/plotting/cortical_pv.py:36:    "posterior_left": ([-1, 0, 0], [0, 0, 1]),
+/content/tribev2/tribev2/plotting/cortical_pv.py:37:    "posterior_right": ([-1, 0, 0], [0, 0, 1]),
+/content/tribev2/tribev2/plotting/cortical_pv.py:58:        hemi: str = "left",
+/content/tribev2/tribev2/plotting/cortical_pv.py:63:        hemis = ["left", "right"] if hemi == "both" else [hemi]
+/content/tribev2/tribev2/plotting/cortical_pv.py:64:        n = FSAVERAGE_SIZES[self.mesh]
+/content/tribev2/tribev2/plotting/cortical_pv.py:65:        for h in hemis:
+/content/tribev2/tribev2/plotting/cortical_pv.py:68:                idx = get_hcp_roi_indices(roi, mesh=self.mesh, hemi=h)
+/content/tribev2/tribev2/plotting/cortical_pv.py:69:                if h == "right":
+/content/tribev2/tribev2/plotting/cortical_pv.py:84:        views="left",
+/content/tribev2/tribev2/plotting/cortical_pv.py:113:            selected_hemi = (
+/content/tribev2/tribev2/plotting/cortical_pv.py:114:                "left"
+/content/tribev2/tribev2/plotting/cortical_pv.py:115:                if view in ["left", "medial_left"]
+/content/tribev2/tribev2/plotting/cortical_pv.py:116:                else "right" if view in ["right", "medial_right"] else "both"
+/content/tribev2/tribev2/plotting/cortical_pv.py:118:            mesh = self._mesh[selected_hemi]
+/content/tribev2/tribev2/plotting/cortical_pv.py:120:            stat_map = stat_maps[selected_hemi]
+/content/tribev2/tribev2/plotting/cortical_pv.py:178:        views: list[str] = ["left"],
+/content/tribev2/tribev2/plotting/cortical_pv.py:190:        hemis = [self.get_hemis(signal) for signal in signals]
+/content/tribev2/tribev2/plotting/cortical_pv.py:192:            alpha_hemis = self.get_hemis(alpha_signals)
+/content/tribev2/tribev2/plotting/cortical_pv.py:195:        for selected_hemis in ("left", "right", "both"):
+/content/tribev2/tribev2/plotting/cortical_pv.py:196:            stat_maps = [hemi[selected_hemis]["stat_map"] for hemi in hemis]
+/content/tribev2/tribev2/plotting/cortical_pv.py:222:                alpha = alpha_hemis[selected_hemis]["stat_map"]
+/content/tribev2/tribev2/plotting/cortical_pv.py:225:            bg = hemis[0][selected_hemis]["bg_map"]
+/content/tribev2/tribev2/plotting/cortical_pv.py:234:            mesh = self._mesh[selected_hemis]
+/content/tribev2/tribev2/plotting/cortical_pv.py:235:            data[selected_hemis] = dict(
+/content/tribev2/tribev2/plotting/cortical_pv.py:242:            selected_hemis = (
+/content/tribev2/tribev2/plotting/cortical_pv.py:243:                "left" if "left" in view else "right" if "right" in view else "both"
+/content/tribev2/tribev2/plotting/cortical_pv.py:245:            d = data[selected_hemis]
+/content/tribev2/tribev2/plotting/utils.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/plotting/utils.py:2:# All rights reserved.
+/content/tribev2/tribev2/plotting/utils.py:338:    right = x * pos.width
+/content/tribev2/tribev2/plotting/utils.py:340:        pos.x0 + right,
+/content/tribev2/tribev2/plotting/utils.py:351:    x_offset=0,
+/content/tribev2/tribev2/plotting/utils.py:352:    y_offset=0.03,
+/content/tribev2/tribev2/plotting/utils.py:361:        pos.x0 + x_offset,
+/content/tribev2/tribev2/plotting/utils.py:362:        pos.y1 + y_offset,
+/content/tribev2/tribev2/plotting/utils.py:371:def set_title(axes, title, x_offset=0, y_offset=0, **kwargs):
+/content/tribev2/tribev2/plotting/utils.py:376:    x = x + x_offset
+/content/tribev2/tribev2/plotting/utils.py:377:    y = axes[0].get_position().y1 + y_offset
+/content/tribev2/tribev2/plotting/utils.py:397:    left, right, bottom, top = xs.min(), xs.max(), ys.min(), ys.max()
+/content/tribev2/tribev2/plotting/utils.py:398:    w_pad = int(w_pad * (right - left))
+/content/tribev2/tribev2/plotting/utils.py:400:    left, bottom = max(0, left - w_pad), max(0, bottom - h_pad)
+/content/tribev2/tribev2/plotting/utils.py:401:    right, top = min(img.shape[1], right + w_pad), min(img.shape[0], top + h_pad)
+/content/tribev2/tribev2/plotting/utils.py:403:    return img[bottom : top + 1, left : right + 1]
+/content/tribev2/tribev2/plotting/utils.py:462:def get_rainbow_brain(mesh="fsaverage5", hemi="both"):
+/content/tribev2/tribev2/plotting/utils.py:464:    from nilearn.datasets import fetch_surf_fsaverage
+/content/tribev2/tribev2/plotting/utils.py:467:    fsaverage = fetch_surf_fsaverage(mesh=mesh)
+/content/tribev2/tribev2/plotting/utils.py:468:    sphere_l, _ = load_surf_mesh(fsaverage["sphere_left"])
+/content/tribev2/tribev2/plotting/utils.py:469:    sphere_r, _ = load_surf_mesh(fsaverage["sphere_right"])
+/content/tribev2/tribev2/plotting/utils.py:470:    if hemi == "both":
+/content/tribev2/tribev2/plotting/utils.py:473:        coords = sphere_l if hemi == "left" else sphere_r
+/content/tribev2/tribev2/plotting/utils.py:477:    # On fsaverage, +x is Right, -x is Left.
+/content/tribev2/tribev2/plotting/utils.py:479:    # or flip the X for the right hemisphere so that 'lateral' is always
+/content/tribev2/tribev2/plotting/utils.py:481:    x_mapped = x if hemi == "left" else -x
+/content/tribev2/tribev2/plotting/utils.py:488:    # (Optional: adds a slight brightness gradient from bottom to top)
+/content/tribev2/tribev2/plotting/utils.py:509:def get_clip(segment, start_offset=0, stop_offset=0):
+/content/tribev2/tribev2/plotting/utils.py:516:    true_start = video.start - video.offset
+/content/tribev2/tribev2/plotting/utils.py:518:        max(segment.start + start_offset - true_start, 0),
+/content/tribev2/tribev2/plotting/utils.py:519:        min(segment.stop + stop_offset - true_start, clip.duration),
+/content/tribev2/tribev2/plotting/utils.py:524:def get_audio(segment, start_offset=0, stop_offset=0):
+/content/tribev2/tribev2/plotting/utils.py:531:    true_start = audio.start - audio.offset
+/content/tribev2/tribev2/plotting/utils.py:533:        max(segment.start + start_offset - true_start, 0),
+/content/tribev2/tribev2/plotting/utils.py:534:        min(segment.stop + stop_offset - true_start, clip.duration),
+/content/tribev2/tribev2/__init__.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/__init__.py:2:# All rights reserved.
+/content/tribev2/tribev2/grids/configs.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/grids/configs.py:2:# All rights reserved.
+/content/tribev2/tribev2/grids/test_run.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/grids/test_run.py:2:# All rights reserved.
+/content/tribev2/tribev2/grids/defaults.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/grids/defaults.py:2:# All rights reserved.
+/content/tribev2/tribev2/grids/defaults.py:30:    "frequency": 2,
+/content/tribev2/tribev2/grids/defaults.py:37:    "frequency": 2,
+/content/tribev2/tribev2/grids/defaults.py:59:    "frequency": 2,
+/content/tribev2/tribev2/grids/defaults.py:67:    "offset": 5,
+/content/tribev2/tribev2/grids/defaults.py:68:    "frequency": 1,
+/content/tribev2/tribev2/grids/defaults.py:71:        "mesh": "fsaverage5",
+/content/tribev2/tribev2/grids/defaults.py:126:        "frequency": 2,
+/content/tribev2/tribev2/grids/run_subcortical.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/grids/run_subcortical.py:2:# All rights reserved.
+/content/tribev2/tribev2/grids/run_cortical.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/grids/run_cortical.py:2:# All rights reserved.
+/content/tribev2/tribev2/studies/wen2017.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/studies/wen2017.py:2:# All rights reserved.
+/content/tribev2/tribev2/studies/wen2017.py:76:            type="Fmri", start=0, filepath=nii_file, frequency=freq, duration=dur
+/content/tribev2/tribev2/studies/lahner2024bold.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/studies/lahner2024bold.py:2:# All rights reserved.
+/content/tribev2/tribev2/studies/lahner2024bold.py:15:    - 3T fMRI recordings (TR = 1.75 seconds)
+/content/tribev2/tribev2/studies/lahner2024bold.py:30:        * fsaverage (cortical surface, 163842 vertices per hemisphere)
+/content/tribev2/tribev2/studies/lahner2024bold.py:32:    - Pre-computed GLM betas available for fsaverage space
+/content/tribev2/tribev2/studies/lahner2024bold.py:90:        frequency=0.571,
+/content/tribev2/tribev2/studies/lahner2024bold.py:101:        "fsaverage",
+/content/tribev2/tribev2/studies/lahner2024bold.py:118:            "_hemi-R_space-fsaverage_bold.func.gii",
+/content/tribev2/tribev2/studies/lahner2024bold.py:119:            "_hemi-L_space-fsaverage_bold.func.gii",
+/content/tribev2/tribev2/studies/lahner2024bold.py:135:                self.path / "download/derivatives/versionB/fsaverage/GLM/"
+/content/tribev2/tribev2/studies/lahner2024bold.py:139:                for hemi in ("left", "right"):
+/content/tribev2/tribev2/studies/lahner2024bold.py:142:                        f"_hemi-{hemi}_normalized.pkl"
+/content/tribev2/tribev2/studies/lahner2024bold.py:192:            "frequency": 1.0 / self.TR_FMRI_S,
+/content/tribev2/tribev2/studies/lahner2024bold.py:214:        elif space in ["fsnative", "fsaverage"]:
+/content/tribev2/tribev2/studies/lahner2024bold.py:263:        self, timeline: dict[str, tp.Any], space: str = "fsaverage"
+/content/tribev2/tribev2/studies/lahner2024bold.py:266:        if space not in ["fsaverage", "fsnative"]:
+/content/tribev2/tribev2/studies/lahner2024bold.py:267:            msg = f"{space} is not supported. " "Only surfaces 'fsaverage' "
+/content/tribev2/tribev2/studies/lahner2024bold.py:275:        for hemi in ("L", "R"):
+/content/tribev2/tribev2/studies/lahner2024bold.py:281:                f"_run-{tl['run']}_hemi-{hemi}_space-{space}_bold.func.gii"
+/content/tribev2/tribev2/studies/lahner2024bold.py:283:            hemi_data = nibabel.load(fp, mmap=True).darrays  # type: ignore
+/content/tribev2/tribev2/studies/lahner2024bold.py:284:            if len(hemi_data) != n_volumes:
+/content/tribev2/tribev2/studies/lahner2024bold.py:285:                msg = f"Expected {n_volumes} volumes, got {len(hemi_data)}"
+/content/tribev2/tribev2/studies/lahner2024bold.py:287:            if space == "fsaverage" and hemi_data[0].data.shape != (163842,):
+/content/tribev2/tribev2/studies/lahner2024bold.py:288:                msg = f"Expected shape (163842,), got {hemi_data[0].data.shape}"
+/content/tribev2/tribev2/studies/lahner2024bold.py:290:            np_data = np.stack([darray.data for darray in hemi_data], -1)
+/content/tribev2/tribev2/studies/__init__.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/studies/__init__.py:2:# All rights reserved.
+/content/tribev2/tribev2/studies/lebel2023bold.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/studies/lebel2023bold.py:2:# All rights reserved.
+/content/tribev2/tribev2/studies/lebel2023bold.py:14:    - 3T fMRI recordings (TR = 2.0 seconds)
+/content/tribev2/tribev2/studies/lebel2023bold.py:36:        - Available spaces: T1w, MNI152NLin6Asym, fsaverage, fsnative
+/content/tribev2/tribev2/studies/lebel2023bold.py:209:        "(T1w, MNI152NLin6Asym, fsaverage, fsnative). 432 timelines with word and "
+/content/tribev2/tribev2/studies/lebel2023bold.py:249:        frequency=0.5,
+/content/tribev2/tribev2/studies/lebel2023bold.py:250:        fmri_spaces=("T1w", "MNI152NLin6Asym", "fsaverage", "fsnative"),
+/content/tribev2/tribev2/studies/lebel2023bold.py:336:                frequency=freq,
+/content/tribev2/tribev2/studies/algonauts2025.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/studies/algonauts2025.py:2:# All rights reserved.
+/content/tribev2/tribev2/studies/algonauts2025.py:18:    - TR = 1.49 seconds
+/content/tribev2/tribev2/studies/algonauts2025.py:61:    _FREQUENCY: tp.ClassVar[float] = 1 / 1.49
+/content/tribev2/tribev2/studies/algonauts2025.py:76:        copyright = {Creative Commons Attribution 4.0 International},
+/content/tribev2/tribev2/studies/algonauts2025.py:95:        frequency=0.671,
+/content/tribev2/tribev2/studies/algonauts2025.py:226:        return dict(type="Fmri", filepath=info, start=0, frequency=self._FREQUENCY)
+/content/tribev2/tribev2/studies/algonauts2025.py:286:        frequency=0.671,
+/content/tribev2/tribev2/studies/algonauts2025.py:313:                    frequency=self._FREQUENCY,
+/content/tribev2/tribev2/demo_utils.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/demo_utils.py:2:# All rights reserved.
+/content/tribev2/tribev2/demo_utils.py:325:        """Run inference on an events DataFrame and return per-TR predictions.
+/content/tribev2/tribev2/demo_utils.py:327:        Each batch is split into segments of length ``data.TR``.  When
+/content/tribev2/tribev2/demo_utils.py:366:                    for t in np.arange(0, segment.duration - 1e-2, self.data.TR):
+/content/tribev2/tribev2/demo_utils.py:368:                            segment.copy(offset=t, duration=self.data.TR)
+/content/tribev2/tribev2/utils_fmri.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/utils_fmri.py:2:# All rights reserved.
+/content/tribev2/tribev2/utils_fmri.py:14:from neuralset.extractors.neuro import FSAVERAGE_SIZES
+/content/tribev2/tribev2/utils_fmri.py:47:    # FSAVERAGE
+/content/tribev2/tribev2/utils_fmri.py:48:    FSAVERAGE = _FmriTemplateSpaceSpec("fsaverage", (163842,))
+/content/tribev2/tribev2/utils_fmri.py:49:    FSAVERAGE_6 = _FmriTemplateSpaceSpec("fsaverage6", (40962,))
+/content/tribev2/tribev2/utils_fmri.py:50:    FSAVERAGE_5 = _FmriTemplateSpaceSpec("fsaverage5", (10242,))
+/content/tribev2/tribev2/utils_fmri.py:51:    FSAVERAGE_4 = _FmriTemplateSpaceSpec("fsaverage4", (2562,))
+/content/tribev2/tribev2/utils_fmri.py:52:    FSAVERAGE_3 = _FmriTemplateSpaceSpec("fsaverage3", (642,))
+/content/tribev2/tribev2/utils_fmri.py:78:    target_space="fsaverage",
+/content/tribev2/tribev2/utils_fmri.py:82:    Load MNI surface meshes for both hemispheres and white / pial surfaces.
+/content/tribev2/tribev2/utils_fmri.py:95:        Dictionary with keys like 'pial_left', 'pial_right', 'white_left', 'white_right'
+/content/tribev2/tribev2/utils_fmri.py:100:    if not re.match(r"^fsaverage[3-6]?$", target_space):
+/content/tribev2/tribev2/utils_fmri.py:102:            f"target_space must be 'fsaverage' or 'fsaverage3/4/5/6', got '{target_space}'"
+/content/tribev2/tribev2/utils_fmri.py:123:        for hemi in ["left", "right"]:
+/content/tribev2/tribev2/utils_fmri.py:124:            mesh_path = os.path.join(mesh_dir, f"{hemi[0]}h.{surf}.{target_space}.gii")
+/content/tribev2/tribev2/utils_fmri.py:125:            meshes[f"{surf}_{hemi}"] = load_surf_mesh(mesh_path)
+/content/tribev2/tribev2/utils_fmri.py:130:    """Project data to an fsaverage surface mesh.
+/content/tribev2/tribev2/utils_fmri.py:139:    >>> SurfaceProjector(mesh="fsaverage5")
+/content/tribev2/tribev2/utils_fmri.py:140:    >>> SurfaceProjector(mesh="fsaverage6", radius=5.0, interpolation="nearest")
+/content/tribev2/tribev2/utils_fmri.py:151:    extract_fsaverage_from_mni: bool = False
+/content/tribev2/tribev2/utils_fmri.py:160:        if self.mesh not in FSAVERAGE_SIZES:
+/content/tribev2/tribev2/utils_fmri.py:161:            raise ValueError(f"mesh must be an fsaverage mesh (got {self.mesh!r})")
+/content/tribev2/tribev2/utils_fmri.py:165:            if self.extract_fsaverage_from_mni:
+/content/tribev2/tribev2/utils_fmri.py:167:                fsaverage = load_mni_mesh(mni_template_spec, self.mesh)
+/content/tribev2/tribev2/utils_fmri.py:171:                fsaverage = datasets.fetch_surf_fsaverage(self.mesh)
+/content/tribev2/tribev2/utils_fmri.py:172:            self._mesh = fsaverage
+/content/tribev2/tribev2/utils_fmri.py:176:        self, hemi: str, center_depth: float = 0.5
+/content/tribev2/tribev2/utils_fmri.py:179:        surf_mesh, inner_mesh = meshes[f"pial_{hemi}"], meshes[f"white_{hemi}"]
+/content/tribev2/tribev2/utils_fmri.py:207:            hemis = []
+/content/tribev2/tribev2/utils_fmri.py:208:            for hemi in ("left", "right"):
+/content/tribev2/tribev2/utils_fmri.py:210:                    surf_mesh = meshes[f"pial_{hemi}"]
+/content/tribev2/tribev2/utils_fmri.py:212:                    surf_mesh = self.get_intermediate_mesh(hemi, self.center_depth)
+/content/tribev2/tribev2/utils_fmri.py:213:                hemis.append(
+/content/tribev2/tribev2/utils_fmri.py:217:                        inner_mesh=meshes[f"white_{hemi}"],
+/content/tribev2/tribev2/utils_fmri.py:226:            return np.vstack(hemis)
+/content/tribev2/tribev2/utils_fmri.py:231:            if n_vertices not in list(FSAVERAGE_SIZES.values()) or rec.shape[0] % 2:
+/content/tribev2/tribev2/utils_fmri.py:232:                msg = f"The detected number of vertices ({rec.shape[0]}) is not in {list(FSAVERAGE_SIZES.values())}"
+/content/tribev2/tribev2/utils_fmri.py:234:            n_vertices_resampled = FSAVERAGE_SIZES.get(self.mesh)
+/content/tribev2/tribev2/utils_fmri.py:241:                left = data[:n_vertices_resampled, :]
+/content/tribev2/tribev2/utils_fmri.py:242:                right = data[n_vertices : n_vertices + n_vertices_resampled, :]
+/content/tribev2/tribev2/utils_fmri.py:243:                data = np.concatenate([left, right], axis=0)
+/content/tribev2/tribev2/main.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/main.py:2:# All rights reserved.
+/content/tribev2/tribev2/main.py:97:    frequency: float | None = None
+/content/tribev2/tribev2/main.py:139:        if self.frequency is not None:
+/content/tribev2/tribev2/main.py:142:                if hasattr(extractor, "frequency"):
+/content/tribev2/tribev2/main.py:143:                    setattr(extractor, "frequency", self.frequency)
+/content/tribev2/tribev2/main.py:146:    def TR(self) -> float:
+/content/tribev2/tribev2/main.py:147:        return 1 / self.neuro.frequency
+/content/tribev2/tribev2/main.py:248:                stride=(self.duration_trs - overlap_trs) * self.TR,
+/content/tribev2/tribev2/main.py:249:                duration=self.duration_trs * self.TR,
+/content/tribev2/tribev2/main.py:513:                from neuralset.extractors.neuro import FSAVERAGE_SIZES
+/content/tribev2/tribev2/main.py:515:                n_outputs = 2 * FSAVERAGE_SIZES[self.data.neuro.projection.mesh]
+/content/tribev2/tribev2/utils.py:1:# Copyright (c) Meta Platforms, Inc. and affiliates.
+/content/tribev2/tribev2/utils.py:2:# All rights reserved.
+/content/tribev2/tribev2/utils.py:19:from neuralset.extractors.neuro import FSAVERAGE_SIZES
+/content/tribev2/tribev2/utils.py:214:def get_hcp_labels(mesh="fsaverage5", combine=False, hemi="both"):
+/content/tribev2/tribev2/utils.py:216:    Get the HCP labels for the fsaverage subject.
+/content/tribev2/tribev2/utils.py:218:    if hemi in ["right", "left"]:
+/content/tribev2/tribev2/utils.py:226:                "fsaverage", name, hemi="both", subjects_dir=subjects_dir
+/content/tribev2/tribev2/utils.py:234:            if (hemi == "right" and "-lh" in name) or (
+/content/tribev2/tribev2/utils.py:235:                hemi == "left" and "-rh" in name
+/content/tribev2/tribev2/utils.py:241:        expected_size = FSAVERAGE_SIZES[mesh]
+/content/tribev2/tribev2/utils.py:242:        index_offset = expected_size if hemi == "right" else 0
+/content/tribev2/tribev2/utils.py:244:            k: v[v < expected_size] + index_offset for k, v in label_to_vertices.items()
+/content/tribev2/tribev2/utils.py:249:        assert hemi == "both", f"Invalid hemisphere: {hemi}"
+/content/tribev2/tribev2/utils.py:250:        left, right = get_hcp_labels(
+/content/tribev2/tribev2/utils.py:251:            mesh=mesh, combine=combine, hemi="left"
+/content/tribev2/tribev2/utils.py:252:        ), get_hcp_labels(mesh=mesh, combine=combine, hemi="right")
+/content/tribev2/tribev2/utils.py:254:            k: np.concatenate([left[k], right[k]]) for k in left.keys()
+/content/tribev2/tribev2/utils.py:259:def get_hcp_vertex_labels(mesh="fsaverage5", combine=False):
+/content/tribev2/tribev2/utils.py:261:    out = [""] * FSAVERAGE_SIZES[mesh] * 2
+/content/tribev2/tribev2/utils.py:268:def get_hcp_roi_indices(rois: str | list[str], hemi="both", mesh="fsaverage5"):
+/content/tribev2/tribev2/utils.py:269:    labels = get_hcp_labels(mesh=mesh, combine=False, hemi=hemi)
+/content/tribev2/tribev2/utils.py:287:def summarize_by_roi(data: np.ndarray, hemi="both", mesh="fsaverage5"):
+/content/tribev2/tribev2/utils.py:289:    if hemi in ["left", "right", "both"]:
+/content/tribev2/tribev2/utils.py:290:        labels = get_hcp_labels(mesh=mesh, combine=False, hemi=hemi)
+/content/tribev2/tribev2/utils.py:293:                data[get_hcp_roi_indices(roi, hemi=hemi, mesh=mesh)].mean()
+/content/tribev2/tribev2/utils.py:297:    elif hemi == "both_separate":
+/content/tribev2/tribev2/utils.py:300:                summarize_by_roi(data, hemi="left", mesh=mesh),
+/content/tribev2/tribev2/utils.py:301:                summarize_by_roi(data, hemi="right", mesh=mesh),
+/content/tribev2/tribev2/utils.py:305:        raise ValueError(f"Invalid hemisphere: {hemi}")
+/content/tribev2/tribev2/utils.py:309:def get_topk_rois(data: np.ndarray, hemi="both", mesh="fsaverage5", k=10) -> list[str]:
+/content/tribev2/tribev2/utils.py:310:    values = summarize_by_roi(data, hemi=hemi, mesh=mesh)
+/content/tribev2/tribev2/utils.py:311:    if hemi == "both_separate":
+/content/tribev2/tribev2/utils.py:312:        left_labels = get_hcp_labels(mesh=mesh, combine=False, hemi="left").keys()
+/content/tribev2/tribev2/utils.py:313:        right_labels = get_hcp_labels(mesh=mesh, combine=False, hemi="right").keys()
+/content/tribev2/tribev2/utils.py:314:        labels = [f"{l}-lh" for l in left_labels] + [f"{l}-rh" for l in right_labels]
+/content/tribev2/tribev2/utils.py:316:        labels = get_hcp_labels(mesh=mesh, combine=False, hemi=hemi).keys()

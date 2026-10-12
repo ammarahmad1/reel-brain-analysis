@@ -1,0 +1,7 @@
+type,start,duration,timeline,subject,session,task,run,filepath,frequency,offset,stop,text,sequence_id,sentence,language,sentence_char,text_char,context,modality
+Audio,0.0,22.64,default,default,,,,/content/reel/reel.wav,44100.0,0.0,22.64,,,,,,,,
+Video,0.0,22.64,default,default,,,,/content/reel/reel.mp4,30.0,0.0,22.64,,,,,,,,
+Sentence,9.027999000000001,1.2900019999999992,default,default,,,,,,,10.318001,Purple rain,,,,,,,
+Text,9.028,1.2899999999999991,default,default,,,,,,,10.318,Purple rain,0.0,,english,,,,
+Word,9.028,0.7459999999999987,default,default,,,,,,,9.774,Purple,0.0,Purple rain,english,0.0,0.0,Purple,
+Word,9.935,0.3829999999999991,default,default,,,,,,,10.318,rain.,0.0,Purple rain,english,7.0,7.0,Purple rain,

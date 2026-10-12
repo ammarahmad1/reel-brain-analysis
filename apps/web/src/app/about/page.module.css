@@ -1,0 +1,19 @@
+.article {
+  max-width: 720px;
+}
+
+.article h2 {
+  margin-top: 2rem;
+}
+
+.article ul {
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lead {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+}
