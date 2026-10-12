@@ -21,7 +21,6 @@ export interface Report {
    */
   fixes: Fix[];
   heatmaps: Heatmap[];
-  disclaimer: string;
   credits: {
     model: string;
     model_url: string;

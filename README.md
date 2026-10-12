@@ -10,9 +10,10 @@ second-by-second report on how an average brain is predicted to respond to it:
 - three concrete things to fix
 - brain heatmaps for the whole reel, the hook, the peak and the deepest dip
 
+**Viewer:** [reel-brain-analysis.vercel.app](https://reel-brain-analysis.vercel.app) · [sample report](https://reel-brain-analysis.vercel.app/report/sample)
+
 Everything runs on Google Colab's free GPU. The report opens in your browser; your video never leaves your
 Colab session.
-
 
 ## Make a report
 
@@ -25,7 +26,7 @@ You'll need a Google account and a Hugging Face account.
    secret named `HF_TOKEN`.
 3. Run the cells one at a time and pick your reel (60 seconds max). A 20-second reel takes about 15–20
    minutes on the free T4; a full minute can take 40 or more.
-4. Download `report.zip` and drop it on the report viewer.
+4. Download `report.zip` and drop it on the [report viewer](https://reel-brain-analysis.vercel.app).
 
 ## How the report is made
 

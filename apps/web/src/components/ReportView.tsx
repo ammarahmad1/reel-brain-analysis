@@ -21,10 +21,6 @@ export function ReportView({ report, imageSrc }: Props) {
 
   return (
     <div className={styles.root}>
-      <p className={styles.disclaimer} role="note">
-        <strong>Model predictions, not measurements.</strong> {report.disclaimer}
-      </p>
-
       <section aria-labelledby="summary-title">
         <h2 id="summary-title" className="visually-hidden">
           Summary

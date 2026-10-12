@@ -4,8 +4,7 @@ import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "About",
-  description:
-    "How Reel Brain Report works, what it can and can't tell you, privacy, and licenses.",
+  description: "How Reel Brain Report works, how to read the scores, privacy, and licenses.",
 };
 
 export default function AboutPage() {
@@ -33,22 +32,11 @@ export default function AboutPage() {
         <a href={`${REPO_URL}/blob/main/docs/report-methodology.md`}>methodology</a>.
       </p>
 
-      <h2>What it can and can&apos;t tell you</h2>
-      <ul>
-        <li>
-          These are <strong>model predictions for an average brain</strong>, not measurements of you
-          or your audience.
-        </li>
-        <li>
-          Scores compare moments <strong>within the same reel</strong>. A weak hook is weak next to
-          the rest of that reel, not next to other people&apos;s reels.
-        </li>
-        <li>
-          A predicted brain response isn&apos;t attention, enjoyment or views. Nothing here promises
-          engagement.
-        </li>
-        <li>The region groupings are coarse and the rules are deliberately simple.</li>
-      </ul>
+      <h2>Reading the scores</h2>
+      <p>
+        Scores compare moments <strong>within the same reel</strong>. A weak hook is weak next to
+        the rest of that reel, not next to other people&apos;s reels.
+      </p>
 
       <h2>Privacy</h2>
       <ul>

@@ -257,7 +257,6 @@
       "file": "dip.png"
     }
   ],
-  "disclaimer": "These are predictions of an average brain's response from Meta FAIR's TRIBE v2 model, not measurements of you or your audience. Scores compare moments within this reel.",
   "credits": {
     "model": "TRIBE v2 by Meta FAIR",
     "model_url": "https://github.com/facebookresearch/tribev2",

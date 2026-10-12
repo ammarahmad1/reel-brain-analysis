@@ -1,16 +1,27 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { REPO_URL, TRIBE_URL } from "@/lib/links";
+import { REPO_URL, SITE_URL, TRIBE_URL } from "@/lib/links";
 import styles from "./layout.module.css";
 import "./globals.css";
 
+const description =
+  "Free, open-source reports on how an average brain is predicted to respond to your reel, second by second, using Meta FAIR's TRIBE v2.";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Reel Brain Report",
     template: "%s · Reel Brain Report",
   },
-  description:
-    "Free, open-source reports on how an average brain is predicted to respond to your reel, second by second, using Meta FAIR's TRIBE v2.",
+  description,
+  openGraph: {
+    type: "website",
+    siteName: "Reel Brain Report",
+    title: "Reel Brain Report",
+    description,
+    url: "/",
+  },
+  twitter: { card: "summary", title: "Reel Brain Report", description },
 };
 
 export default function RootLayout({

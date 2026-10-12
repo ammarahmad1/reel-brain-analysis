@@ -17,10 +17,6 @@ from .insights import analyze
 from .timeline import build_timeline
 
 SCHEMA_VERSION = "0.1.0"
-DISCLAIMER = (
-    "These are predictions of an average brain's response from Meta FAIR's TRIBE v2 model, "
-    "not measurements of you or your audience. Scores compare moments within this reel."
-)
 CREDITS = {
     "model": "TRIBE v2 by Meta FAIR",
     "model_url": "https://github.com/facebookresearch/tribev2",
@@ -68,7 +64,6 @@ def build_report(
         },
         "fixes": [{k: v for k, v in asdict(f).items() if k != "priority"} for f in fixes],
         "heatmaps": [asdict(h) for h in heatmaps],
-        "disclaimer": DISCLAIMER,
         "credits": CREDITS,
     }
 

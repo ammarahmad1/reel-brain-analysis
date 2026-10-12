@@ -1,3 +1,4 @@
+export const SITE_URL = "https://reel-brain-analysis.vercel.app";
 export const REPO_URL = "https://github.com/ammarahmad1/reel-brain-analysis";
 export const COLAB_URL =
   "https://colab.research.google.com/github/ammarahmad1/reel-brain-analysis/blob/main/notebooks/reel_brain_report.ipynb";

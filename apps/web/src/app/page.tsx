@@ -41,8 +41,7 @@ export default function Home() {
       </section>
 
       <p className="secondary">
-        These are predictions for an average brain, not measurements of you or your audience, and
-        they can&apos;t promise views or engagement. Your video stays in your own Colab session.{" "}
+        Your video stays in your own Colab session.{" "}
         <Link href="/about">How it works, privacy and licenses</Link>.
       </p>
     </div>
