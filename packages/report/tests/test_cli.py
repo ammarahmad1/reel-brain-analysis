@@ -38,4 +38,4 @@ def test_cli_writes_report(tmp_path, monkeypatch, capsys):
     assert report["insights"]["speech"]["word_count"] == 2
     for heatmap in report["heatmaps"]:
         assert (tmp_path / "report" / heatmap["file"]).is_file()
-    assert "Top fixes:" in capsys.readouterr().out
+    assert "Peak moment:" in capsys.readouterr().out

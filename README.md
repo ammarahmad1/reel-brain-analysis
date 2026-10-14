@@ -7,7 +7,6 @@ second-by-second report on how an average brain is predicted to respond to it:
 
 - a timeline of the overall response and four channels: visuals, faces, sound and speech
 - how strong the hook is, where the reel dips, and which channel carries it
-- three concrete things to fix
 - brain heatmaps for the whole reel, the hook, the peak and the deepest dip
 
 **Viewer:** [reel-brain-analysis.vercel.app](https://reel-brain-analysis.vercel.app) · [sample report](https://reel-brain-analysis.vercel.app/report/sample)
@@ -33,7 +32,7 @@ You'll need a Google account and a Hugging Face account.
 
 TRIBE v2 predicts fMRI responses at 20,484 points on the cortex (fsaverage5), one row per second. The
 `reel_report` package averages those points over regions of the Destrieux atlas, turns each channel into
-within-reel z-scores, and applies a fixed set of rules for the hook, dips, carrier and fixes. There's no
+within-reel z-scores, and applies a fixed set of rules for the hook, dips and carrier. There's no
 language model in the loop, so the same reel always gives the same report.
 
 The exact regions, thresholds and rules are in [docs/report-methodology.md](docs/report-methodology.md).

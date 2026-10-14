@@ -10,8 +10,8 @@ export default function Home() {
         <h1>See how a brain is predicted to respond to your reel</h1>
         <p className={styles.lead}>
           A second-by-second report on your reel: how strong the hook is, where attention is
-          predicted to dip, whether visuals, faces, sound or speech carry it, and three things to
-          fix. Free and open source. <Link href="/report/sample">See an example</Link>.
+          predicted to dip, whether visuals, faces, sound or speech carry it, and brain heatmaps.
+          Free and open source. <Link href="/report/sample">See an example</Link>.
         </p>
       </section>
 

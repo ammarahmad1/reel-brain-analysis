@@ -11,7 +11,6 @@ import numpy as np
 
 from .atlas import load_destrieux
 from .config import ReportConfig
-from .fixes import suggest_fixes
 from .heatmap import render_heatmaps
 from .insights import analyze
 from .timeline import build_timeline
@@ -39,7 +38,6 @@ def build_report(
         preds, segment_starts, video_duration_s, load_destrieux(), cfg.channel_regions
     )
     ins = analyze(timeline, word_count, cfg)
-    fixes = suggest_fixes(ins, cfg)
     heatmaps = render_heatmaps(timeline, ins, heatmap_dir) if heatmap_dir else []
 
     return {
@@ -62,7 +60,6 @@ def build_report(
             },
             "speech": {"word_count": ins.word_count, "detected": ins.speech_detected},
         },
-        "fixes": [{k: v for k, v in asdict(f).items() if k != "priority"} for f in fixes],
         "heatmaps": [asdict(h) for h in heatmaps],
         "credits": CREDITS,
     }

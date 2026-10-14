@@ -37,7 +37,6 @@ class ReportConfig:
     max_dips: int = 3
     carrier_min_r: float = 0.5  # correlation with overall needed to "carry" the reel
     speech_min_words: int = 5
-    max_fixes: int = 3
     channel_regions: dict[str, tuple[str, ...]] = field(
         default_factory=lambda: dict(CHANNEL_REGIONS)
     )

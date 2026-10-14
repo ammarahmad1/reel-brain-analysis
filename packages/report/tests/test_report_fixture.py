@@ -31,6 +31,7 @@ def test_report_from_spike_matches_schema(schema, tmp_path):
     # which confirms row i = video second i (TRIBE's 5 s offset is already applied).
     speech = report["timeline"]["channels"]["speech"]
     assert int(np.argmax(speech[:15])) == 9
-    assert [f["id"] for f in report["fixes"]] == ["weak_hook", "dip_16", "no_speech"]
+    assert report["insights"]["hook"]["rating"] == "weak"
+    assert [(d["start_s"], d["end_s"]) for d in report["insights"]["dips"]] == [(2, 4), (16, 20)]
     for heatmap in report["heatmaps"]:
         assert (tmp_path / heatmap["file"]).stat().st_size > 10_000

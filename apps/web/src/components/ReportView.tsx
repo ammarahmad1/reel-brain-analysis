@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function ReportView({ report, imageSrc }: Props) {
-  const { insights, fixes, heatmaps } = report;
+  const { insights, heatmaps } = report;
   const carrier = insights.carrier.channel;
 
   return (
@@ -45,24 +45,6 @@ export function ReportView({ report, imageSrc }: Props) {
             </span>
           </div>
         </div>
-      </section>
-
-      <section className="card" aria-labelledby="fixes-title">
-        <h2 id="fixes-title">Top {fixes.length} fixes</h2>
-        <ol className={styles.fixes}>
-          {fixes.map((fix) => {
-            const span = formatSpan(fix.start_s, fix.end_s);
-            return (
-              <li key={fix.id} className={styles.fix}>
-                <div className={styles.fixHead}>
-                  <h3>{fix.title}</h3>
-                  {span && !fix.title.includes(span) && <span className={styles.chip}>{span}</span>}
-                </div>
-                <p className="secondary">{fix.detail}</p>
-              </li>
-            );
-          })}
-        </ol>
       </section>
 
       <Timeline report={report} />

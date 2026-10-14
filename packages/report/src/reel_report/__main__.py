@@ -59,12 +59,12 @@ def main(argv: list[str] | None = None) -> None:
 
     ins = report["insights"]
     print(f"\nDone in {(time.time() - start) / 60:.0f} min.\n")
+    dips = ", ".join(f"{d['start_s']}–{d['end_s']}s" for d in ins["dips"]) or "none"
     print(f"Hook (first {ins['hook']['end_s']}s): {ins['hook']['rating']}")
+    print(f"Ending: {ins['ending']['rating']}")
     print(f"Peak moment: {ins['peak']['second']}s")
+    print(f"Dips: {dips}")
     print(f"Carried by: {ins['carrier']['channel'] or 'no single channel'}")
-    print("\nTop fixes:")
-    for i, fix in enumerate(report["fixes"], 1):
-        print(f"  {i}. {fix['title']}")
 
 
 if __name__ == "__main__":

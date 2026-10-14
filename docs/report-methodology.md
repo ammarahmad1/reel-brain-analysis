@@ -58,24 +58,6 @@ We don't have one yet.
 | Carrier | the channel whose raw timeline correlates best with overall, if r ≥ `carrier_min_r`; otherwise none | `0.5` |
 | Speech detected | word count ≥ `speech_min_words` | `5` |
 
-## Fixes
-
-The rules emit candidates with a priority. The top `max_fixes` (3) are kept. Rule order breaks
-ties, so the output is deterministic.
-
-| Fix | When | Priority |
-|---|---|---|
-| Strengthen the first N seconds | hook weak | 100 + 10·\|z\| |
-| Channel-specific dip fix | one per dip (up to 2 deepest), skipped if inside a weak hook | 80 + 10·\|z\| |
-| End on a stronger beat | ending weak | 60 + 10·\|z\| |
-| Consider a voiceover | no speech detected | 50 |
-| Make the first N seconds stand out | hook average and peak outside hook | 30 |
-| Lean into <channel> | always (carrier, or the closest channel) | 20 / 6 |
-| Build around your peak | always | 10 |
-| Tighten around the weakest second | unless a dip already covers it | 8 |
-
-The last three always apply, so every report has exactly 3 fixes.
-
 ## Heatmaps
 
 Lateral left/right views on the inflated fsaverage5 surface, rendered with nilearn. The images

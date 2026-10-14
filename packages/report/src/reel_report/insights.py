@@ -58,8 +58,7 @@ def analyze(timeline: Timeline, word_count: int, cfg: ReportConfig) -> Insights:
     speech_detected = word_count >= cfg.speech_min_words
     channels_z = timeline.channels_z()
     if not speech_detected:
-        # Blaming a dip on missing speech in a reel without speech isn't actionable;
-        # the no-speech fix covers that case.
+        # A reel without speech always has a quiet speech channel, so it would "cause" every dip.
         channels_z.pop("speech", None)
     return Insights(
         hook=_window(seconds, overall_z, 0, cfg.hook_s, cfg),

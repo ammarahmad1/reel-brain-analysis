@@ -27,8 +27,8 @@ export default function AboutPage() {
         Those predictions are averaged over regions of the Destrieux atlas: visual cortex for{" "}
         <strong>visuals</strong>, the fusiform gyrus for <strong>faces</strong>, auditory cortex for{" "}
         <strong>sound</strong> and language areas for <strong>speech</strong>. A small set of fixed
-        rules turns that into the hook rating, the dips, the channel that carries the reel and the
-        top three fixes. The rules and thresholds are documented in the{" "}
+        rules turns that into the hook rating, the dips and the channel that carries the reel. The
+        rules and thresholds are documented in the{" "}
         <a href={`${REPO_URL}/blob/main/docs/report-methodology.md`}>methodology</a>.
       </p>
 

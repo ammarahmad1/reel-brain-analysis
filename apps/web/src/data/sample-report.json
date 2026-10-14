@@ -208,29 +208,6 @@
       "detected": false
     }
   },
-  "fixes": [
-    {
-      "id": "weak_hook",
-      "title": "Strengthen the first 3 seconds",
-      "detail": "Your opening is predicted to land below the rest of the reel. Your strongest predicted moment is at 9s. Open with it, or tease it early.",
-      "start_s": 0,
-      "end_s": 3
-    },
-    {
-      "id": "dip_16",
-      "title": "Add visual change at 16–20s",
-      "detail": "Predicted visual response drops here. Try a cut, camera move, zoom, or new shot.",
-      "start_s": 16,
-      "end_s": 20
-    },
-    {
-      "id": "no_speech",
-      "title": "Consider a voiceover or spoken hook",
-      "detail": "Few or no spoken words were detected, so language areas are predicted to stay quiet. A short spoken line adds another channel. Skip this if the reel is meant to be music-only.",
-      "start_s": null,
-      "end_s": null
-    }
-  ],
   "heatmaps": [
     {
       "kind": "average",

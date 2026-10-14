@@ -10,7 +10,6 @@
     "video",
     "timeline",
     "insights",
-    "fixes",
     "heatmaps",
     "credits"
   ],
@@ -189,47 +188,6 @@
         }
       },
       "title": "Insights"
-    },
-    "fixes": {
-      "type": "array",
-      "maxItems": 3,
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "title",
-          "detail",
-          "start_s",
-          "end_s"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "detail": {
-            "type": "string"
-          },
-          "start_s": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "minimum": 0
-          },
-          "end_s": {
-            "type": [
-              "integer",
-              "null"
-            ],
-            "minimum": 1
-          }
-        },
-        "title": "Fix"
-      }
     },
     "heatmaps": {
       "type": "array",

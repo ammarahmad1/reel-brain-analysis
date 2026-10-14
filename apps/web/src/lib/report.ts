@@ -53,7 +53,7 @@ export function parseReport(text: string): Report {
     n > 0 &&
     r.timeline!.overall?.length === n &&
     CHANNELS.every((c) => r.timeline!.channels?.[c]?.length === n);
-  if (!lengthsMatch || !r.insights || !Array.isArray(r.fixes) || !Array.isArray(r.heatmaps)) {
+  if (!lengthsMatch || !r.insights || !Array.isArray(r.heatmaps)) {
     throw new Error("report.json is missing parts of the report.");
   }
   return r as Report;

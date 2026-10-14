@@ -44,45 +44,6 @@
   color: var(--status-neutral-ink);
 }
 
-.fixes {
-  margin: 12px 0 0;
-  padding-left: 1.4rem;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.fix::marker {
-  font-weight: 700;
-  color: var(--text-secondary);
-}
-
-.fix p {
-  margin: 4px 0 0;
-}
-
-.fixHead {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.fixHead h3 {
-  font-size: 1.0625rem;
-  margin: 0;
-}
-
-.chip {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  padding: 2px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  font-variant-numeric: tabular-nums;
-}
-
 .dips {
   margin: 8px 0 12px;
   padding-left: 1.2rem;

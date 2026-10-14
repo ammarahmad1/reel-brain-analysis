@@ -16,10 +16,6 @@ export interface Report {
   };
   timeline: Timeline;
   insights: Insights;
-  /**
-   * @maxItems 3
-   */
-  fixes: Fix[];
   heatmaps: Heatmap[];
   credits: {
     model: string;
@@ -75,13 +71,6 @@ export interface Carrier {
   correlations: {
     [k: string]: number;
   };
-}
-export interface Fix {
-  id: string;
-  title: string;
-  detail: string;
-  start_s: number | null;
-  end_s: number | null;
 }
 export interface Heatmap {
   kind: "average" | "hook" | "peak" | "dip";
