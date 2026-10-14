@@ -62,6 +62,13 @@ python -m venv .venv
 cd packages/report && ../../.venv/bin/pytest
 ```
 
+To run a reel outside Colab (Linux, NVIDIA GPU with 16 GB+), install
+[tribev2](https://github.com/facebookresearch/tribev2) and this package, then:
+
+```sh
+python -m reel_report my_reel.mp4 --out report
+```
+
 Viewer:
 
 ```sh
