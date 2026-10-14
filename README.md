@@ -24,8 +24,9 @@ You'll need a Google account and a Hugging Face account.
    [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens).
 2. Open the notebook in Colab (badge above), set the runtime to **T4 GPU**, and add your token as a Colab
    secret named `HF_TOKEN`.
-3. Run the cells one at a time and pick your reel (60 seconds max). A 20-second reel takes about 15–20
-   minutes on the free T4; a full minute can take 40 or more.
+3. Run the cells one at a time and pick your reel (60 seconds max). Never restart the session, even if a
+   message says to. A 20-second reel takes about 15–20 minutes on the free T4; a full minute can take 40 or
+   more.
 4. Download `report.zip` and drop it on the [report viewer](https://reel-brain-analysis.vercel.app).
 
 ## How the report is made
